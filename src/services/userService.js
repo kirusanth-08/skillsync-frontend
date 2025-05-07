@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/profiles';
 
+
 export const userService = {
   // Get user by Username
   getUserByUserName: async (username) => {
@@ -25,7 +26,6 @@ export const userService = {
     }
   },
 
-  // Upload profile image
   uploadProfileImage: async (username, formData) => {
     try {
       const response = await axios.post(`${API_URL}/${username}/image`, formData, {
@@ -33,12 +33,13 @@ export const userService = {
           'Content-Type': 'multipart/form-data'
         }
       });
-      return response.data;
+      return response.data; // should return { imageUrl: ... }
     } catch (error) {
       console.error('Error uploading profile image:', error);
       throw error;
     }
   }
+
 };
 
 export default userService;

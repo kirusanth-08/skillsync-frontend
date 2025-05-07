@@ -95,29 +95,39 @@ export const getCoursesCount = async (): Promise<number> => {
   return data || 0;
 };
 
+export const getPostsCount = async (): Promise<number> => {
+  const response = await fetch(`${API_BASE_URL}/posts/count`);
+  const data = await handleResponse(response);
+  return data || 0;
+};
+
 export const getKeyStatistics = async (): Promise<{
   usersCount: number;
   examsCount: number;
   coursesCount: number;
+  postsCount: number;
 }> => {
   try {
-    const [usersCount, examsCount, coursesCount] = await Promise.all([
+    const [usersCount, examsCount, coursesCount, postsCount] = await Promise.all([
       getUsersCount(),
       getExamsCount(),
-      getCoursesCount()
+      getCoursesCount(),
+      getPostsCount()
     ]);
     
     return {
       usersCount,
       examsCount,
-      coursesCount
+      coursesCount,
+      postsCount
     };
   } catch (error) {
     console.error('Error fetching key statistics:', error);
     return {
       usersCount: 0,
       examsCount: 0,
-      coursesCount: 0
+      coursesCount: 0,
+      postsCount: 0
     };
   }
 };

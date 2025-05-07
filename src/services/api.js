@@ -61,3 +61,16 @@ export const uploadProfileImage = async (userId, imageFile) => {
   }
   return response.json();
 };
+
+import axios from "axios";
+
+export const getAllPosts = async () => {
+  try {
+    const response = await axios.get("http://localhost:8080/api/posts"); // or hosted URL
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch MongoDB posts:", error);
+    return [];
+  }
+};
+
