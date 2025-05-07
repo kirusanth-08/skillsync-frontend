@@ -12,7 +12,7 @@ import {
   Legend
 } from 'chart.js';
 import { useAuth } from '../hooks/useAuth';
-import { getUserAnalytics } from '../services/api';
+import { getUserAnalytics, getKeyStatistics } from '../services/api.ts';
 
 
 import {
@@ -47,6 +47,25 @@ function AnalyticsPage() {
   const [courseCompletionData, setCourseCompletionData] = useState([]);
   const [enrollmentTrends, setEnrollmentTrends] = useState([]);
   const [insights, setInsights] = useState([]);
+  const [keyStats, setKeyStats] = useState({
+    usersCount: 0,
+    examsCount: 0,
+    coursesCount: 0
+  });
+
+  // Add a new effect to fetch key statistics
+  useEffect(() => {
+    const loadKeyStatistics = async () => {
+      try {
+        const stats = await getKeyStatistics();
+        setKeyStats(stats);
+      } catch (error) {
+        console.error('Error fetching key statistics:', error);
+      }
+    };
+    
+    loadKeyStatistics();
+  }, []);
 
   useEffect(() => {
     const loadEnrollmentData = async () => {
@@ -273,20 +292,21 @@ function AnalyticsPage() {
           <h2 className="text-xl font-semibold mb-4">Key Statistics</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-blue-600">registered users</p>
-              <p className="text-2xl font-bold text-blue-700">{analytics?.completedCourses || 0}</p>
+              <p className="text-sm text-blue-600">Registered Users</p>
+              <p className="text-2xl font-bold text-blue-700">{keyStats.usersCount}</p>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
-              <p className="text-sm text-green-600">total courses</p>
-              <p className="text-2xl font-bold text-green-700">{analytics?.streak || 0} days</p>
+              <p className="text-sm text-green-600">Total Courses</p>
+              <p className="text-2xl font-bold text-green-700">{keyStats.coursesCount}</p>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-lg">
               <p className="text-sm text-yellow-600">Exams</p>
+              <p className="text-2xl font-bold text-yellow-700">{keyStats.examsCount}</p>
             </div>
-            <div className="text-center p-4 bg-red-50 rounded-lg">
+            {/* <div className="text-center p-4 bg-red-50 rounded-lg">
               <p className="text-sm text-red-600">Skill Achievements</p>
               <p className="text-2xl font-bold text-red-700">{analytics?.achievements || 0}</p>
-            </div>
+            </div> */}
           </div>
         </div>
 
