@@ -75,3 +75,55 @@ export const uploadProfileImage = async (userId: string, imageFile: File): Promi
   });
   return handleResponse(response);
 };
+
+// Analytics and statistics API calls
+export const getUsersCount = async (): Promise<number> => {
+  const response = await fetch(`${API_BASE_URL}/users/count`);
+  const data = await handleResponse(response);
+  return data || 0;
+};
+
+export const getExamsCount = async (): Promise<number> => {
+  const response = await fetch(`${API_BASE_URL}/exams/count`);
+  const data = await handleResponse(response);
+  return data || 0;
+};
+
+export const getCoursesCount = async (): Promise<number> => {
+  const response = await fetch(`${API_BASE_URL}/course/count`);
+  const data = await handleResponse(response);
+  return data || 0;
+};
+
+export const getKeyStatistics = async (): Promise<{
+  usersCount: number;
+  examsCount: number;
+  coursesCount: number;
+}> => {
+  try {
+    const [usersCount, examsCount, coursesCount] = await Promise.all([
+      getUsersCount(),
+      getExamsCount(),
+      getCoursesCount()
+    ]);
+    
+    return {
+      usersCount,
+      examsCount,
+      coursesCount
+    };
+  } catch (error) {
+    console.error('Error fetching key statistics:', error);
+    return {
+      usersCount: 0,
+      examsCount: 0,
+      coursesCount: 0
+    };
+  }
+};
+
+// Placeholder for getUserAnalytics function if it's not defined elsewhere
+export const getUserAnalytics = async (userId: string) => {
+  const response = await fetch(`${API_BASE_URL}/users/${userId}/analytics`);
+  return handleResponse(response);
+};
