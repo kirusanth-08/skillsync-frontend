@@ -50,7 +50,8 @@ function AnalyticsPage() {
   const [keyStats, setKeyStats] = useState({
     usersCount: 0,
     examsCount: 0,
-    coursesCount: 0
+    coursesCount: 0,
+    postsCount: 0
   });
 
   // Add a new effect to fetch key statistics
@@ -303,10 +304,10 @@ function AnalyticsPage() {
               <p className="text-sm text-yellow-600">Exams</p>
               <p className="text-2xl font-bold text-yellow-700">{keyStats.examsCount}</p>
             </div>
-            {/* <div className="text-center p-4 bg-red-50 rounded-lg">
-              <p className="text-sm text-red-600">Skill Achievements</p>
-              <p className="text-2xl font-bold text-red-700">{analytics?.achievements || 0}</p>
-            </div> */}
+            <div className="text-center p-4 bg-red-50 rounded-lg">
+              <p className="text-sm text-red-600">Community Posts</p>
+              <p className="text-2xl font-bold text-red-700">{keyStats.postsCount}</p>
+            </div>
           </div>
         </div>
 

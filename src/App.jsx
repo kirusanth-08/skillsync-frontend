@@ -14,6 +14,8 @@ import ProfilePage from './Pages/ProfilePage';
 import Reports from './Pages/Reports';
 import DashboardHomePage from './Pages/DashboardHome';
 import AnalyticsPage from './Pages/AnalyticsPage';
+// TODO: Create and import the CreatePostPage component
+import CreatePostPage from './Pages/CreatePostPage'; // You'll need to create this file
 
 
 
@@ -28,6 +30,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={< Login />} />
           <Route path="/" element={< Home />} />
+          
           <Route path="/course" element={< CourseManagementDashboard />} />
           <Route path="/dash" element={< DashboardHomePage />} />
           <Route path="/password" element={< Password />} />
@@ -37,6 +40,8 @@ const App = () => {
           <Route path="/profile/exam" element={<ExamProfilesList />} />
           <Route path="/Reports" element={<Reports />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/dashboard" element={< CoursesDashboard/>} />
+          <Route path="/create-post" element={<CreatePostPage />} />
         </Routes>
       </>
   );
